@@ -15,4 +15,24 @@ public class UsuarioRepository {
         usuarios.add(u); // adiciona na lista 
         return usuarios.getLast(); // retorna o que foi adicionado
     }
+
+    public Usuario buscarPorEmail(String email) {
+        for (Usuario u : usuarios) {
+            if (u.getEmail().equals(email)) {
+                return u;
+            }
+        }
+        return null;
+    }
+
+    public String fazerLogin(String email, String senha) {
+        Usuario usuario = buscarPorEmail(email);
+        if (usuario == null) {
+            return "Credenciais inválidas";
+        }
+        if (usuario.getSenha().equals(senha)) {
+            return "Sucesso";
+        }
+        return "Credenciais inválidas";
+    }
 }
