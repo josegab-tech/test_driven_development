@@ -7,12 +7,14 @@ public class Usuario {
     private String nome;
     private String email;
     private String cpf;
+    private String senha;
     private LocalDate dataNascimento;
-    
-    public Usuario(String nome, String email, String cpf, LocalDate dataNascimento) {
+
+    public Usuario(String nome, String email, String cpf, String senha, LocalDate dataNascimento) {
         this.nome = nome;
         this.email = email;
         this.cpf = cpf;
+        this.senha = senha;
         this.dataNascimento = dataNascimento;
     }
 
@@ -52,13 +54,13 @@ public class Usuario {
         this.cpf = cpf;
     }
 
-    public LocalDate getDataNascimento() {
-        return dataNascimento;
-    }
-    
-    public void setDataNascimento(LocalDate dataNascimento) {
-        this.dataNascimento = dataNascimento;
-    }
+    public String getSenha() { return senha;}
 
-    
+    public void setSenha(String senha) {this.senha = senha;}
+
+    public LocalDate getDataNascimento() {return dataNascimento;}
+
+    public void setDataNascimento(LocalDate dataNascimento) { this.dataNascimento = dataNascimento; }
+
+
 }

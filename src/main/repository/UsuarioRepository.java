@@ -36,12 +36,31 @@ public class UsuarioRepository {
     }
 
     private boolean verificarCpf(String cpf) {
-        
         for (Usuario u : usuarios) {
             if (u.getCpf().equalsIgnoreCase(cpf)) {
-                return true; // email ja foi utilizado
+                return true; // cpf ja foi utilizado
             }
         }
         return false;
+    }
+
+    public Usuario buscarPorEmail(String email) {
+        for (Usuario u : usuarios) {
+            if (u.getEmail().equals(email)) {
+                return u;
+            }
+        }
+        return null;
+    }
+
+    public String fazerLogin(String email, String senha) {
+        Usuario usuario = buscarPorEmail(email);
+        if (usuario == null) {
+            return "Credenciais inválidas";
+        }
+        if (usuario.getSenha().equals(senha)) {
+            return "Sucesso";
+        }
+        return "Credenciais inválidas";
     }
 }
