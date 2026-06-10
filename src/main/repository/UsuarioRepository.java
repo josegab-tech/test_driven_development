@@ -11,6 +11,20 @@ public class UsuarioRepository {
 
     public Usuario salvar(Usuario u) throws IllegalArgumentException {
 
+        if(u.getEmail() != null) u.setEmail(u.getEmail().trim());
+        if(u.getNome() !=null) u.setNome(u.getNome().trim());
+
+        if(u.getNome() != null && u.getNome().length() > 500){
+            throw new IllegalArgumentException("O nome não pode exceder 500 caracteres.");
+        }
+        if(u.getEmail()!= null && u.getEmail().length() > 500){
+            throw new IllegalArgumentException("O e-mail não pode exceder 500 caracteres.");
+        }
+
+        if(u.getSenha() == null || !validarComplexidadeDaSenha(u.getSenha())){
+            throw new IllegalArgumentException("A senha não cumpre os requisitos de complexidade.");
+        }
+
         if (verificarEmail(u.getEmail())) {
             throw new IllegalArgumentException();
         }
@@ -54,6 +68,9 @@ public class UsuarioRepository {
     }
 
     public String fazerLogin(String email, String senha) {
+        //Trim no email para login flexivel
+        if(email != null) email = email.trim();
+
         Usuario usuario = buscarPorEmail(email);
         if (usuario == null) {
             return "Credenciais inválidas";
@@ -62,5 +79,17 @@ public class UsuarioRepository {
             return "Sucesso";
         }
         return "Credenciais inválidas";
+    }
+
+    private boolean validarComplexidadeDaSenha(String senha){
+        if(senha.length() < 8 || senha.contains(" ")){
+            return false;
+        }
+
+        boolean temNumero = senha.matches(".*\\d.*");
+        //Vericia se possui caracteres especiais ou fora da faixa Alfanumérica
+        boolean temEspecialOuEmoji = senha.matches(".*[^a-zA-Z0-9].*");
+
+        return temNumero && temEspecialOuEmoji;
     }
 }
